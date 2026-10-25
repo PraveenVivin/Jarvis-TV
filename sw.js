@@ -1,11 +1,11 @@
-const CACHE_NAME = 'jarvis-tv-v1';
+const CACHE_NAME = 'jarvis-tv-v2';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/icon.svg'
+  './',
+  './index.html',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -36,7 +36,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
   // Always bypass cache for API routes and WebSocket
-  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/ws')) {
+  if (url.pathname.includes('/api/') || url.pathname.includes('/ws')) {
     return;
   }
 
@@ -44,7 +44,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Fetch fresh in background
         fetch(event.request).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));

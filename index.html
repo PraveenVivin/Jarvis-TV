@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Jarvis TV Remote</title>
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
 
   <style>
     :root {
@@ -1074,7 +1074,7 @@
     // PWA Service Worker & Install Prompt
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch((err) => {
+        navigator.serviceWorker.register('sw.js').catch((err) => {
           console.warn('SW registration failed:', err);
         });
       });
@@ -1107,3 +1107,4 @@
   </script>
 </body>
 </html>
+

@@ -594,6 +594,7 @@
         </div>
         <h1>Jarvis TV</h1>
       </div>
+      <button id="btn-header-install" onclick="showInstallGuide()" style="padding:6px 12px;font-size:12px;font-weight:700;border-radius:20px;background:linear-gradient(135deg,#2563eb,#7c3aed);border:none;color:white;display:flex;align-items:center;gap:4px;cursor:pointer;margin-right:8px;box-shadow:0 2px 8px rgba(37,99,235,0.4);">📥 Install App</button>
       <div class="status-badge" id="status-badge" onclick="toggleConnectionPanel()">
         <span class="dot" id="status-dot"></span>
         <span id="status-text">Disconnected</span>
@@ -609,10 +610,10 @@
     <!-- Connection Panel -->
     <div class="connection-panel" id="connection-panel">
       <div class="ip-input-row">
-        <input type="text" id="tv-ip" placeholder="Android TV IP (e.g. 192.168.1.15)">
+        <input type="text" id="tv-ip" placeholder="TV IP (e.g. 192.168.0.xxx)">
         <button class="btn-connect" id="btn-connect" onclick="connectTV()">Connect</button>
       </div>
-      <div class="feedback-text" id="feedback-text">Enter your TV's Wi-Fi IP address from TV Settings &gt; Network</div>
+      <div class="feedback-text" id="feedback-text">Enter TV IP (Find on TV: Settings ⚙️ &gt; Network &amp; Internet &gt; Wi-Fi)</div>
     </div>
 
     <!-- Quick Actions (Power, Settings, Input, Numpad) -->
@@ -807,6 +808,31 @@
     let ws = null;
 
     // Haptic feedback
+    
+    function showInstallGuide() {
+      vibrate(20);
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(() => { deferredInstallPrompt = null; });
+        return;
+      }
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        alert('To Install on iPhone/iPad:\n\n1. Tap the Share button (square with arrow ⬆) at the bottom of Safari.\n2. Scroll down and tap "Add to Home Screen".');
+      } else {
+        alert('To Install on Android:\n\n1. Tap the 3 dots (⋮) in the top-right corner of Chrome.\n2. Tap "Install app" or "Add to Home screen".');
+      }
+    }
+
+    if (window.location.hostname.includes('github.io')) {
+      window.addEventListener('DOMContentLoaded', () => {
+        const fb = document.getElementById('feedback-text');
+        if (fb) {
+          fb.innerHTML = '⚠️ Note: To control TV, run <b>start.bat</b> on PC and open <b>http://192.168.0.106:3000</b> on phone!';
+        }
+      });
+    }
+
     function vibrate(ms = 25) {
       if (navigator.vibrate) {
         try { navigator.vibrate(ms); } catch (_) {}

@@ -1,0 +1,18 @@
+{
+  "name": "jarvis-tv",
+  "version": "1.0.0",
+  "description": "Progressive Web App (PWA) Android TV Remote with Google TV Remote Protocol v2",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["pwa", "androidtv", "googletv", "remote", "smart-tv"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "androidtv-remote": "^1.0.10",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}

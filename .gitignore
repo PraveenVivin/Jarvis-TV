@@ -1,0 +1,4 @@
+node_modules/
+tv_credentials.json
+.DS_Store
+*.log

@@ -1,23 +1,283 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Jarvis TV</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎬 Jarvis TV</title>
+
+<style>
+body{
+  background:#0f1117;
+  color:white;
+  font-family:Arial,sans-serif;
+  margin:0;
+  padding:20px;
+  text-align:center;
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+button{
+  border:none;
+  border-radius:12px;
+  padding:16px;
+  margin:6px;
+  background:#1f2937;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#374151;
+}
+
+.big{
+  width:100%;
+  background:#2563eb;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.row button{
+  flex:1;
+}
+
+.nav{
+  margin-top:20px;
+}
+
+.nav button{
+  width:75px;
+  height:75px;
+}
+
+.status{
+  margin:15px 0;
+  padding:10px;
+  border-radius:10px;
+  background:#1f2937;
+}
+
+.section{
+  margin-top:25px;
+}
+</style>
 </head>
 
-<body style="background:black;color:white;font-family:Arial;text-align:center;padding:20px;">
+<body>
 
 <h1>🎬 Jarvis TV</h1>
 
-<button onclick="alert('Netflix Command')">
-Netflix
+<button class="big" onclick="startVoice()">
+🎤 Voice Command
 </button>
 
-<button onclick="alert('YouTube Command')">
-YouTube
+<div class="status" id="status">
+Ready
+</div>
+
+<div class="section">
+<h3>Apps</h3>
+
+<div class="row">
+<button onclick="sendCommand('netflix')">
+📺 Netflix
 </button>
 
-<h2 id="status">Ready</h2>
+<button onclick="sendCommand('youtube')">
+▶️ YouTube
+</button>
+</div>
+
+<div class="row">
+<button onclick="sendCommand('prime')">
+🎥 Prime
+</button>
+
+<button onclick="sendCommand('hotstar')">
+⭐ Hotstar
+</button>
+</div>
+</div>
+
+<div class="section">
+<h3>Navigation</h3>
+
+<div class="nav">
+
+<button onclick="sendCommand('up')">
+▲
+</button>
+
+<br>
+
+<button onclick="sendCommand('left')">
+◀
+</button>
+
+<button onclick="sendCommand('ok')">
+OK
+</button>
+
+<button onclick="sendCommand('right')">
+▶
+</button>
+
+<br>
+
+<button onclick="sendCommand('down')">
+▼
+</button>
+
+</div>
+</div>
+
+<div class="section">
+<h3>TV Controls</h3>
+
+<div class="row">
+<button onclick="sendCommand('home')">
+🏠 Home
+</button>
+
+<button onclick="sendCommand('back')">
+🔙 Back
+</button>
+</div>
+
+<div class="row">
+<button onclick="sendCommand('volup')">
+🔊 +
+</button>
+
+<button onclick="sendCommand('voldown')">
+🔉 -
+</button>
+</div>
+
+<div class="row">
+<button onclick="sendCommand('mute')">
+🔇 Mute
+</button>
+</div>
+</div>
+
+<div class="section">
+<h3>YouTube Shorts</h3>
+
+<div class="row">
+<button onclick="sendCommand('nextshort')">
+⏭ Next
+</button>
+
+<button onclick="sendCommand('prevshort')">
+⏮ Previous
+</button>
+</div>
+
+<div class="row">
+<button onclick="sendCommand('pause')">
+⏸ Pause
+</button>
+</div>
+</div>
+
+<script>
+
+function sendCommand(cmd){
+
+document.getElementById("status").innerHTML =
+"Command: <b>" + cmd + "</b>";
+
+console.log("TV Command:",cmd);
+
+/*
+Future TV Integration
+
+fetch(
+"http://TV-IP:8080/" + cmd,
+{
+ method:"POST"
+}
+);
+
+*/
+
+}
+
+function startVoice(){
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+alert("Voice Recognition Not Supported");
+return;
+}
+
+const recognition =
+new SpeechRecognition();
+
+recognition.lang = "en-US";
+recognition.start();
+
+recognition.onresult = function(event){
+
+const text =
+event.results[0][0].transcript.toLowerCase();
+
+document.getElementById("status").innerHTML =
+'You said: <b>' + text + '</b>';
+
+if(text.includes("netflix"))
+sendCommand("netflix");
+
+else if(text.includes("youtube"))
+sendCommand("youtube");
+
+else if(text.includes("prime"))
+sendCommand("prime");
+
+else if(text.includes("hotstar"))
+sendCommand("hotstar");
+
+else if(text.includes("volume up"))
+sendCommand("volup");
+
+else if(text.includes("volume down"))
+sendCommand("voldown");
+
+else if(text.includes("mute"))
+sendCommand("mute");
+
+else if(text.includes("home"))
+sendCommand("home");
+
+else if(text.includes("back"))
+sendCommand("back");
+
+else if(text.includes("next"))
+sendCommand("nextshort");
+
+else if(text.includes("previous"))
+sendCommand("prevshort");
+
+else if(text.includes("pause"))
+sendCommand("pause");
+
+};
+
+}
+
+</script>
 
 </body>
 </html>

@@ -922,6 +922,19 @@
     }
 
     // Fetch initial status via REST
+    
+    async function safeParseJson(res) {
+      const text = await res.text();
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        if (window.location.hostname.includes('github.io') || res.status === 404) {
+          throw new Error('You are on GitHub Pages (cloud). To control your TV, run start.bat on your PC and open http://192.168.0.106:3000 on your phone!');
+        }
+        throw new Error('Invalid response from server: ' + (text ? text.slice(0, 100) : 'empty'));
+      }
+    }
+
     async function checkStatus() {
       try {
         const res = await fetch('/api/status');

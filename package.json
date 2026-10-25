@@ -6,13 +6,20 @@
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": ["pwa", "androidtv", "googletv", "remote", "smart-tv"],
+  "keywords": [
+    "pwa",
+    "androidtv",
+    "googletv",
+    "remote",
+    "smart-tv"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "androidtv-remote": "^1.0.10",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "qrcode": "^1.5.4",
     "ws": "^8.18.0"
   }
 }
